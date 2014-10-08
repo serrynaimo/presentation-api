@@ -15,26 +15,28 @@
 <script type="text/javascript" src="http://cdn.temasys.com.sg/skyway/skywayjs/0.5.x/skyway.complete.min.js"></script>
 <script type="text/javascript">
 
+// Short URL: http://bit.ly/1yMeiIu
+
 var skyway = new Skyway();
 
 skyway.on('incomingMessage', function (message) {
-    if(typeof message === 'object' && message.length) {
-        for(msg in message) {
-            evalMessage(message[msg]);
+    if(typeof message.content === 'object' && message.content.length) {
+        for(msg in message.content) {
+            evalMessage(message.content[msg]);
         }
     }
     else {
-        evalMessage(message);
+        evalMessage(message.content);
     }
 });
 
 function evalMessage(msg) {
-    if(message.content.substr(0,1) === '/') {
-        document.body.style.color = message.content.substr(1);
+    if(message.substr(0,1) === '/') {
+        document.body.style.color = message.substr(1);
     }
     else {
         var elem = document.createElement('div');
-        elem.textContent = message.content;
+        elem.textContent = message;
         document.body.appendChild(elem);
     }
 };

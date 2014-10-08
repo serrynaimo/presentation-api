@@ -30,7 +30,7 @@ skyway.on('incomingMessage', function (message) {
     }
 });
 
-function evalMessage(msg) {
+function evalMessage(message) {
     if(message.substr(0,1) === '/') {
         document.body.style.color = message.substr(1);
     }

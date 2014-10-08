@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:og="http://ogp.me/ns#"
+    xmlns:fb="http://www.facebook.com/2008/fbml"
+    itemscope itemtype="http://schema.org/WebPage">
+<head>
+    <meta charset="utf-16">
+    <title>Presentation API</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+    <button onclick="showPresentation();">Start presentation</button>
+    <button onclick="stopPresentation();">Stop presentation</button><br/><br/>
+    <input id="message" />
+    <button onclick="sendMessage();">Send text</button><br/><br/>
+    <button onclick="sendMessage('/red');">Change color to red</button>
+    <button onclick="sendMessage('/blue');">Change color to blue</button>
+
+<script type="text/javascript">
+
+(function() {
+    function Presentation() {
+    }
+
+    Presentation.prototype.requestShow = function(url) {
+        return new Promise(function(resolve, reject) {
+            presentationWindow = window.open(url, "", "presentation");
+            if (presentationWindow)
+                presentationWindow.onload = function() { resolve(presentationWindow); };
+            else
+                reject();
+        });
+    };
+    navigator.presentation = new Presentation();
+}());
+
+
+var presentationWindow = null;
+
+
+function showPresentation() {
+    /*if (!navigator.presentation.displayAvailable) {
+        alert("No available display found.");
+        return;
+    }
+
+    navigator.presentation.addEventListener("displayavailablechange", function() {
+        if (!navigator.presentation.displayAvailable) {
+            presentationWindow = null;
+        }
+    });*/
+
+    navigator.presentation.requestShow("presentation-api-remote.html").then(function (w) {
+        presentationWindow = w;
+    }, function (error) {
+        alert("Failed to requestShow: " + error.name);
+    });
+}
+
+
+function stopPresentation() {
+    presentationWindow.close();
+    presentationWindow = null;
+}
+
+
+function sendMessage(msg) {
+    if(presentationWindow) {
+        var input = document.getElementById('message'),
+            msg = msg || input.value;
+
+        presentationWindow.postMessage(msg, "*");
+    }
+}
+
+
+</script>
+
+</body>
+</html>

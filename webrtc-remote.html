@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:og="http://ogp.me/ns#"
+    xmlns:fb="http://www.facebook.com/2008/fbml"
+    itemscope itemtype="http://schema.org/WebPage">
+<head>
+    <meta charset="utf-16">
+    <title>Presentation API with WebRTC Remote</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+    <div>Hi, and welcome to my presentation</div>
+
+
+<script type="text/javascript" src="http://cdn.temasys.com.sg/skyway/skywayjs/0.5.x/skyway.complete.min.js"></script>
+<script type="text/javascript">
+
+var skyway = new Skyway(),
+
+skyway.on('incomingMessage', function (message) {
+    if(message.content.substr(0,1) === '/') {
+        document.body.style.color = message.content.substr(1);
+    }
+    else {
+        var elem = document.createElement('div');
+        elem.textContent = message.content;
+        document.body.appendChild(elem);
+    }
+});
+
+skyway.init({
+    apiKey: '774b477f-dc20-4374-ba13-3eda09414c28',
+    defaultRoom: 'presentation-api'
+});
+
+skyway.joinRoom();
+
+</script>
+
+</body>
+</html>
+

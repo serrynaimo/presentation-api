@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:og="http://ogp.me/ns#"
+    xmlns:fb="http://www.facebook.com/2008/fbml"
+    itemscope itemtype="http://schema.org/WebPage">
+<head>
+    <meta charset="utf-16">
+    <title>Presentation API with WebRTC</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+    <button onclick="showPresentation();">Start presentation</button>
+    <button onclick="stopPresentation();">Stop presentation</button><br/><br/>
+    <input id="message" />
+    <button onclick="sendMessage();">Send text</button><br/><br/>
+    <button onclick="sendMessage('/red');">Change color to red</button>
+    <button onclick="sendMessage('/blue');">Change color to blue</button>
+
+<script type="text/javascript" src="http://cdn.temasys.com.sg/skyway/skywayjs/0.5.x/skyway.complete.min.js"></script>
+<script type="text/javascript">
+
+(function() {
+    function Presentation() {
+    }
+
+    Presentation.prototype.requestShow = function(url) {
+        return new Promise(function(resolve, reject) {
+            presentationWindow = window.open(url, "", "presentation");
+            if (presentationWindow)
+                presentationWindow.onload = function() { resolve(presentationWindow); };
+            else
+                reject();
+        });
+    };
+    navigator.presentation = new Presentation();
+}());
+
+
+var presentationWindow = null,
+    skyway = new Skyway();
+
+
+function showPresentation() {
+    /*if (!navigator.presentation.displayAvailable) {
+        alert("No available display found.");
+        return;
+    }
+
+    navigator.presentation.addEventListener("displayavailablechange", function() {
+        if (!navigator.presentation.displayAvailable) {
+            presentationWindow = null;
+        }
+    });*/
+
+    navigator.presentation.requestShow("webrtc-remote.html").then(function (w) {
+        presentationWindow = w;
+    }, function (error) {
+        alert("Failed to requestShow: " + error.name);
+    });
+}
+
+
+function stopPresentation() {
+    presentationWindow.close();
+    presentationWindow = null;
+}
+
+
+function sendMessage(msg) {
+    var input = document.getElementById('message'),
+        msg = msg || input.value;
+
+    skyway.sendMessage(msg);
+}
+
+skyway.init({
+    apiKey: '774b477f-dc20-4374-ba13-3eda09414c28',
+    defaultRoom: 'presentation-api'
+});
+
+skyway.joinRoom();
+
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:og="http://ogp.me/ns#"
+    xmlns:fb="http://www.facebook.com/2008/fbml"
+    itemscope itemtype="http://schema.org/WebPage">
+<head>
+    <meta charset="utf-16">
+    <title>Presentation API Remote</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+    <div>Hi, and welcome to my presentation</div>
+
+<script type="text/javascript">
+
+
+window.addEventListener("message", function(event) {
+    if(event.data.substr(0,1) === '/') {
+        document.body.style.color = event.data.substr(1);
+    }
+    else {
+        var elem = document.createElement('div');
+        elem.textContent = event.data;
+        document.body.appendChild(elem);
+    }
+});
+
+
+</script>
+
+</body>
+</html>

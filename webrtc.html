@@ -76,8 +76,10 @@ function sendMessage(msg) {
     messages.push(msg);
 }
 
-skyway.on('peerJoined', function(peerId) {
-    skyway.sendP2PMessage(JSON.stringify(messages), peerId);
+skyway.on('peerJoined', function(peerId, peerInfo, isSelf) {
+    if(!isSelf) {
+        skyway.sendP2PMessage(JSON.stringify(messages), peerId);
+    }
 });
 
 skyway.init({

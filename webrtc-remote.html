@@ -20,13 +20,17 @@
 var skyway = new Skyway();
 
 skyway.on('incomingMessage', function (message) {
-    if(typeof message.content === 'object' && message.content.length) {
-        for(msg in message.content) {
-            evalMessage(message.content[msg]);
-        }
+    var messages = [];
+
+    try {
+        messages = JSON.parse(message.content);
     }
-    else {
-        evalMessage(message.content);
+    catch(e) {
+        messages.push(message.content);
+    }
+
+    for(msg in messages) {
+        evalMessage(messages[msg]);
     }
 });
 

@@ -76,8 +76,8 @@ function sendMessage(msg) {
     messages.push(msg);
 }
 
-skyway.on('peerJoined', function(peerId, peerInfo, isSelf) {
-    if(!isSelf) {
+skyway.on('dataChannelState', function(state, peerId) {
+    if(state === Skyway.DATA_CHANNEL_STATE.OPEN) {
         var msg = JSON.stringify(messages);
         skyway.sendP2PMessage(msg, peerId);
     }

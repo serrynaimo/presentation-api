@@ -72,7 +72,7 @@ function sendMessage(msg) {
     var input = document.getElementById('message'),
         msg = msg || input.value;
 
-    skyway.sendMessage(msg);
+    skyway.sendP2PMessage(msg);
     messages.push(msg);
 }
 

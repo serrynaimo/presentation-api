@@ -38,6 +38,7 @@
 
 
 var presentationWindow = null,
+    messages = [],
     skyway = new Skyway();
 
 
@@ -72,7 +73,12 @@ function sendMessage(msg) {
         msg = msg || input.value;
 
     skyway.sendMessage(msg);
+    messages.push(msg);
 }
+
+skyway.on('peerJoined', function(peerId) {
+    skyway.sendMessage(messages, peerId);
+});
 
 skyway.init({
     apiKey: '774b477f-dc20-4374-ba13-3eda09414c28',

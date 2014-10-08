@@ -18,6 +18,17 @@
 var skyway = new Skyway();
 
 skyway.on('incomingMessage', function (message) {
+    if(typeof message === 'object' && message.length) {
+        for(msg in message) {
+            evalMessage(message[msg]);
+        }
+    }
+    else {
+        evalMessage(message);
+    }
+});
+
+function evalMessage(msg) {
     if(message.content.substr(0,1) === '/') {
         document.body.style.color = message.content.substr(1);
     }
@@ -26,7 +37,7 @@ skyway.on('incomingMessage', function (message) {
         elem.textContent = message.content;
         document.body.appendChild(elem);
     }
-});
+};
 
 skyway.init({
     apiKey: '774b477f-dc20-4374-ba13-3eda09414c28',

@@ -12,14 +12,14 @@
     <div>Hi, and welcome to my presentation</div>
 
 
-<script type="text/javascript" src="http://cdn.temasys.com.sg/skyway/skywayjs/0.5.x/skyway.complete.min.js"></script>
+<script type="text/javascript" src="http://cdn.temasys.com.sg/skylink/skylinkjs/0.5.x/skylink.complete.min.js"></script>
 <script type="text/javascript">
 
 // Short URL: http://bit.ly/1yMeiIu
 
-var skyway = new Skyway();
+var skylink = new Skylink();
 
-skyway.on('incomingMessage', function (message) {
+skylink.on('incomingMessage', function (message) {
     var messages = [];
 
     try {
@@ -45,12 +45,12 @@ function evalMessage(message) {
     }
 };
 
-skyway.init({
+skylink.init({
     apiKey: '774b477f-dc20-4374-ba13-3eda09414c28',
     defaultRoom: 'presentation-api'
 });
 
-skyway.joinRoom();
+skylink.joinRoom();
 
 </script>
 

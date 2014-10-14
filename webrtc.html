@@ -17,7 +17,7 @@
     <button onclick="sendMessage('/red');">Change color to red</button>
     <button onclick="sendMessage('/blue');">Change color to blue</button>
 
-<script type="text/javascript" src="http://cdn.temasys.com.sg/skyway/skywayjs/0.5.x/skyway.complete.min.js"></script>
+<script type="text/javascript" src="http://cdn.temasys.com.sg/skylink/skylinkjs/0.5.x/skylink.complete.min.js"></script>
 <script type="text/javascript">
 
 (function() {
@@ -39,7 +39,7 @@
 
 var presentationWindow = null,
     messages = [],
-    skyway = new Skyway();
+    skylink = new Skylink();
 
 
 function showPresentation() {
@@ -72,23 +72,23 @@ function sendMessage(msg) {
     var input = document.getElementById('message'),
         msg = msg || input.value;
 
-    skyway.sendP2PMessage(msg);
+    skylink.sendP2PMessage(msg);
     messages.push(msg);
 }
 
-skyway.on('dataChannelState', function(state, peerId) {
-    if(state === skyway.DATA_CHANNEL_STATE.OPEN) {
+skylink.on('dataChannelState', function(state, peerId) {
+    if(state === skylink.DATA_CHANNEL_STATE.OPEN) {
         var msg = JSON.stringify(messages);
-        skyway.sendP2PMessage(msg, peerId);
+        skylink.sendP2PMessage(msg, peerId);
     }
 });
 
-skyway.init({
+skylink.init({
     apiKey: '774b477f-dc20-4374-ba13-3eda09414c28',
     defaultRoom: 'presentation-api'
 });
 
-skyway.joinRoom();
+skylink.joinRoom();
 
 </script>
 
